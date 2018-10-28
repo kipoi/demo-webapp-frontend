@@ -9,9 +9,7 @@ import {
   NavbarNav,
   NavbarToggler,
   Collapse,
-  NavItem,
-  Footer,
-  NavLink
+  NavItem
 } from "mdbreact";
 
 const Logo = require('./nav_bar_logo_v3.png');
@@ -36,7 +34,7 @@ class Header extends Component {
     return (
       <Navbar color='unique-color-kipoi' dark expand='sm' fixed='top'>
         <NavbarBrand>
-          <Link exact to={'/'} className={'left-margin'}>
+          <Link to={'/'} className={'left-margin'}>
             <img src={Logo} alt='Kipoi' height={50}/>
           </Link>
         </NavbarBrand>

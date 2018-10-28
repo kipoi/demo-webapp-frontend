@@ -3,16 +3,11 @@ import React from "react";
 import "./HomePage.css";
 
 import {
-  EdgeHeader,
-  FreeBird,
-  Container,
   Col,
-  Row,
-  CardBody,
-  Fa
+  Row
 } from "mdbreact";
-
-const NavLink = require("react-router-dom").NavLink;
+import ModelSelectBox from "../../components/HomePage/ModelSelectBox";
+import ModelInput from "../../components/HomePage/ModelInput";
 
 const KipoiSmall = require('./img/kipoi_small.png');
 
@@ -20,7 +15,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <Row>
-        <Col lg={9} className={'mx-auto'}>
+        <Col lg='9' className={'mx-auto'}>
           <Row className={'mb-4'}>
             <Col className={'media kipoi-title-box d-none d-sm-flex'}>
               <div className={'media-left'}>
@@ -29,6 +24,16 @@ class HomePage extends React.Component {
               <div className={'media-body'}>
                 <h3 className="media-heading">: Model zoo for genomics</h3>
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg='3' md='3'>
+              <h5 className={'text-center'}>1. Select models</h5>
+              <ModelSelectBox/>
+            </Col>
+            <Col lg='9' md='9'>
+              <h5 className={'text-center'}>2. Provide input data</h5>
+              <ModelInput/>
             </Col>
           </Row>
         </Col>

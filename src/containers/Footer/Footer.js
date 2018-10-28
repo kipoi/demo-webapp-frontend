@@ -15,11 +15,11 @@ class KipoiFooter extends Component {
       <Footer color="unique-color" className={'page-footer'}>
         <Container fluid>
           <Row>
-            <Col lg={3} md={6} className={'ml-auto'}>
+            <Col lg={'3'} md={'6'} className={'ml-auto'}>
               <h5 className="title mb-3"><strong>About KIPOI project</strong></h5>
               <p>Kipoi is an API and a repository of ready-to-use trained models for regulatory genomics.</p>
             </Col>
-            <Col lg={2} md={6} className={'ml-auto'}>
+            <Col lg={'2'} md={'6'} className={'ml-auto'}>
               <h5 className="title mb-3"><strong>Useful links</strong></h5>
               <ul>
                 <li>
@@ -36,13 +36,13 @@ class KipoiFooter extends Component {
                 </li>
               </ul>
             </Col>
-            <Col lg={4} md={12} className={'ml-auto text-center'}>
+            <Col lg={'4'} md={'12'} className={'ml-auto text-center'}>
               <ul>
                 <li>
                   <h5>Like the project?</h5>
                 </li>
                 <li>
-                  <a target="_blank" href="https://twitter.com/KipoiZoo"
+                  <a target={'_blank'} href="https://twitter.com/KipoiZoo"
                      className="btn btn-primary waves-effect waves-light" rel="nofollow">Tweet us!</a>
                 </li>
               </ul>
