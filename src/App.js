@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import 'material-design-lite/material.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import 'sweetalert/dist/sweetalert.css';
 
 
 import Routes from './Routes';

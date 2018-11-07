@@ -62,13 +62,13 @@ class ModelInput extends React.Component {
         </Nav>
         <TabContent activeItem={this.state.activeItem}>
           <TabPane tabId="predict">
-            <TabInput/>
+            <TabInput fileType="fasta"/>
           </TabPane>
           <TabPane tabId="score-variants">
-            <TabInput/>
+            <TabInput fileType="vcf"/>
           </TabPane>
           <TabPane tabId="interpret">
-            <TabInput/>
+            <TabInput fileType="bed"/>
           </TabPane>
         </TabContent>
       </Container>
