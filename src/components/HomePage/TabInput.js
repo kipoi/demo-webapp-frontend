@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, InputFile, Button, Input} from 'mdbreact';
+import {Row, InputFile, Button, Input, Spinner } from 'mdbreact';
 import SweetAlert from 'sweetalert-react';
 
 import {splitFastaInput} from '../../helpers/FastaHelper';
@@ -13,11 +13,28 @@ class TabInput extends Component {
       selectedFile: null,
       fileError: null,
       fileType: this.props.fileType,
-      inputText: null,
+      inputText: '',
       errorText: null,
-      showError: false
+      showError: false,
+      sampleErrorText: null,
+      showSampleError: false
     };
   }
+
+  sampleButtonClick = () => {
+    const {sample, error} = this.props;
+
+    this.setState({
+      sampleErrorText: error,
+      showSampleError: !!error
+    });
+
+    if (sample) {
+      this.setState({
+        inputText: sample
+      });
+    }
+  };
 
   fileInputHandler = (event) => {
 
@@ -50,11 +67,25 @@ class TabInput extends Component {
         showError: true
       })
     }
+  };
 
-    console.log(parsedInput);
+  clearInput = () => {
+    this.setState({
+      inputText: ''
+    })
   };
 
   render() {
+
+    const {loading} = this.props;
+
+    if (loading) {
+      return (
+        <Row>
+          <Spinner blue big/>
+        </Row>
+      )
+    }
 
     const placeholder = `# Example (BED)\nchr1	100	200\nchr1	200	300\n\n# Example (FASTA)\n>seq1\nACGAT..\n>seq2\nACGAT..`;
 
@@ -64,7 +95,7 @@ class TabInput extends Component {
           <InputFile getValue={this.fileInputHandler}/>
         </div>
         <div className="col-md-3 mt-auto mb-auto d-flex align-items-stretch align-middle">
-          <Button color={'primary'}>Use Example</Button>
+          <Button color={'primary'} disabled={loading} onClick={this.sampleButtonClick}>Use Example</Button>
         </div>
         <div className="col-md-12" style={{height: '20px'}}>
           <p style={{color: 'red'}}>{this.state.fileError}</p>
@@ -77,8 +108,10 @@ class TabInput extends Component {
           <Input label="Example label" hint="(Optional)"/>
         </div>
         <div className="col-md-9">
-          <Button color="primary" disabled={this.state.fileError && this.state.fileError.length > 0}
+          <Button color="primary" disabled={(this.state.fileError && this.state.fileError.length > 0)}
                   onClick={this.handleSubmit}>Submit</Button>
+          <Button color="primary" disabled={(this.state.inputText.length === 0)}
+                  onClick={this.clearInput}>Clear Input</Button>
         </div>
 
         <SweetAlert
@@ -87,6 +120,14 @@ class TabInput extends Component {
           text={this.state.errorText}
           onConfirm={() => this.setState({ showError: false })}
           onOutsideClick={() => this.setState({ showError: false })}
+        />
+
+        <SweetAlert
+          show={this.state.showSampleError}
+          title="Error"
+          text={this.state.sampleErrorText}
+          onConfirm={() => this.setState({ showSampleError: false })}
+          onOutsideClick={() => this.setState({ showSampleError: false })}
         />
       </Row>
     )

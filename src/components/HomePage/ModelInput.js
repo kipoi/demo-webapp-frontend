@@ -1,7 +1,9 @@
 import React from 'react';
-import {TabPane, TabContent, Nav, NavItem, NavLink, Row, Col, Container, InputFile, Button, Input} from 'mdbreact';
+import {connect} from 'react-redux';
+import {TabPane, TabContent, Nav, NavItem, NavLink, Container} from 'mdbreact';
 import classnames from 'classnames';
 import TabInput from "./TabInput";
+import {fetchSampleSequences} from "../../redux/actions/sampleActions";
 
 class ModelInput extends React.Component {
 
@@ -13,6 +15,10 @@ class ModelInput extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.dispatch(fetchSampleSequences());
+  }
+
   toggle(tab) {
     if (this.state.activeItem !== tab) {
       this.setState({
@@ -22,6 +28,8 @@ class ModelInput extends React.Component {
   }
 
   render() {
+
+    const {sampleSequences, sampleSequencesLoading, sampleSequencesError} = this.props;
 
     return (
       <Container>
@@ -62,13 +70,19 @@ class ModelInput extends React.Component {
         </Nav>
         <TabContent activeItem={this.state.activeItem}>
           <TabPane tabId="predict">
-            <TabInput fileType="fasta"/>
+            <TabInput fileType="fasta" sample={sampleSequences && sampleSequences['fasta_data']}
+                      loading={sampleSequencesLoading}
+                      error={sampleSequencesError}/>
           </TabPane>
           <TabPane tabId="score-variants">
-            <TabInput fileType="vcf"/>
+            <TabInput fileType="vcf" sample={sampleSequences && sampleSequences['vcf_data']}
+                      loading={sampleSequencesLoading}
+                      error={sampleSequencesError}/>
           </TabPane>
           <TabPane tabId="interpret">
-            <TabInput fileType="bed"/>
+            <TabInput fileType="bed" sample={sampleSequences && sampleSequences['bed_data']}
+                      loading={sampleSequencesLoading}
+                      error={sampleSequencesError}/>
           </TabPane>
         </TabContent>
       </Container>
@@ -76,4 +90,10 @@ class ModelInput extends React.Component {
   }
 }
 
-export default ModelInput;
+const mapStateToProps = state => ({
+  sampleSequences: state.samplesReducer.sampleSequences,
+  sampleSequencesLoading: state.samplesReducer.sampleSequencesLoading,
+  sampleSequencesError: state.samplesReducer.sampleSequencesError
+});
+
+export default connect(mapStateToProps)(ModelInput);
