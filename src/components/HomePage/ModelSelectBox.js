@@ -8,10 +8,15 @@ import {
 } from 'mdbreact';
 
 class ModelSelectBox extends Component {
+
+  handleModelChange = (values) => {
+    this.props.handleModelSelect(values);
+  };
+
   render() {
     return (
       <div>
-        <MDBSelect multiple search={true}>
+        <MDBSelect multiple search={true} getValue={this.handleModelChange}>
           <MDBSelectInput selected="Choose your models"/>
           <MDBSelectOptions>
             <MDBSelectOption disabled>Choose your models</MDBSelectOption>

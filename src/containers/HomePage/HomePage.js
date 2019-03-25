@@ -12,6 +12,21 @@ import ModelInput from "../../components/HomePage/ModelInput";
 const KipoiSmall = require('./img/kipoi_small.png');
 
 class HomePage extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      'selectedModels': []
+    };
+  }
+
+  handleModelSelect = (values) => {
+    this.setState({
+      'selectedModels': values
+    });
+  };
+
   render() {
     return (
       <MDBRow>
@@ -29,11 +44,11 @@ class HomePage extends React.Component {
           <MDBRow>
             <MDBCol lg='3' md='3'>
               <h5 className={'text-center'}>1. Select models</h5>
-              <ModelSelectBox/>
+              <ModelSelectBox handleModelSelect={this.handleModelSelect}/>
             </MDBCol>
             <MDBCol lg='9' md='9'>
               <h5 className={'text-center'}>2. Provide input data</h5>
-              <ModelInput/>
+              <ModelInput selectedModels={this.state.selectedModels}/>
             </MDBCol>
           </MDBRow>
         </MDBCol>
