@@ -7,6 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.4.2",
     "@fortawesome/react-fontawesome": "^0.1.3",
     "bootstrap": "^4.1.3",
+    "history": "^4.7.2",
     "material-design-lite": "^1.3.0",
     "mdbreact": "git+https://oauth2:HzYeaVx4RJSup81e2QfH@git.mdbootstrap.com/mdb/react/re-pro.git",
     "react": "^16.5.0",
