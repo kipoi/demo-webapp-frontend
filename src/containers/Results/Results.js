@@ -17,7 +17,7 @@ const KipoiSmall = require('./img/kipoi_small.png');
 class Results extends React.Component {
 
   componentDidMount() {
-    if (this.props.location.state.data) {
+    if (this.props.location && this.props.location.state.data) {
       const sequences = this.props.location.state.data;
       this.props.dispatch(fetchPredictions(sequences));
     }
