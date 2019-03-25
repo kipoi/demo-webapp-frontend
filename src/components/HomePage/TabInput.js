@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Row, InputFile, Button, Input, Spinner } from 'mdbreact';
+import {withRouter} from 'react-router-dom';
+import {Row, InputFile, Button, Input, Spinner} from 'mdbreact';
 import SweetAlert from 'sweetalert-react';
 
 import {splitFastaInput} from '../../helpers/FastaHelper';
@@ -67,6 +68,16 @@ class TabInput extends Component {
         showError: true
       })
     }
+
+    this.props.history.push({
+      pathname: 'results',
+      state: {
+        data: {
+          'sequences': parsedInput,
+          'models': this.props.selectedModels
+        }
+      }
+    });
   };
 
   clearInput = () => {
@@ -118,20 +129,20 @@ class TabInput extends Component {
           show={this.state.showError}
           title="Error"
           text={this.state.errorText}
-          onConfirm={() => this.setState({ showError: false })}
-          onOutsideClick={() => this.setState({ showError: false })}
+          onConfirm={() => this.setState({showError: false})}
+          onOutsideClick={() => this.setState({showError: false})}
         />
 
         <SweetAlert
           show={this.state.showSampleError}
           title="Error"
           text={this.state.sampleErrorText}
-          onConfirm={() => this.setState({ showSampleError: false })}
-          onOutsideClick={() => this.setState({ showSampleError: false })}
+          onConfirm={() => this.setState({showSampleError: false})}
+          onOutsideClick={() => this.setState({showSampleError: false})}
         />
       </Row>
     )
   }
 }
 
-export default TabInput;
+export default withRouter(TabInput);
