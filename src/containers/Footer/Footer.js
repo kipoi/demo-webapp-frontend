@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 
-import {Footer, Container, Row, Col} from 'mdbreact';
+import {MDBFooter, MDBContainer, MDBRow, MDBCol} from 'mdbreact';
+
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faFileAlt} from '@fortawesome/free-solid-svg-icons';
+import {faGithub} from '@fortawesome/free-brands-svg-icons';
 
 import './style.css';
+
+library.add(faFileAlt);
+library.add(faGithub);
 
 class KipoiFooter extends Component {
 
@@ -12,31 +20,28 @@ class KipoiFooter extends Component {
 
   render() {
     return (
-      <Footer color="unique-color" className={'page-footer'}>
-        <Container fluid>
-          <Row>
-            <Col lg={'3'} md={'6'} className={'ml-auto'}>
+      <MDBFooter color="unique-color" className={'page-footer'}>
+        <MDBContainer fluid>
+          <MDBRow>
+            <MDBCol lg={'3'} md={'6'} className={'ml-auto'}>
               <h5 className="title mb-3"><strong>About KIPOI project</strong></h5>
               <p>Kipoi is an API and a repository of ready-to-use trained models for regulatory genomics.</p>
-            </Col>
-            <Col lg={'2'} md={'6'} className={'ml-auto'}>
+            </MDBCol>
+            <MDBCol lg={'2'} md={'6'} className={'ml-auto'}>
               <h5 className="title mb-3"><strong>Useful links</strong></h5>
               <ul>
                 <li>
-                  <a href="https://github.com/kipoi/kipoi">API repository <i className="fa fa-github"
-                                                                             aria-hidden="true"/></a>
+                  <a href="https://github.com/kipoi/kipoi">API repository <FontAwesomeIcon icon={faGithub}/></a>
                 </li>
                 <li>
-                  <a href="https://github.com/kipoi/models">Model repository <i className="fa fa-github"
-                                                                                aria-hidden="true"/></a>
+                  <a href="https://github.com/kipoi/models">Model repository <FontAwesomeIcon icon={faGithub}/></a>
                 </li>
                 <li>
-                  <a href="https://github.com/kipoi/website">Website repository <i className="fa fa-github"
-                                                                                   aria-hidden="true"/></a>
+                  <a href="https://github.com/kipoi/website">Website repository <FontAwesomeIcon icon={faGithub}/></a>
                 </li>
               </ul>
-            </Col>
-            <Col lg={'4'} md={'12'} className={'ml-auto text-center'}>
+            </MDBCol>
+            <MDBCol lg={'4'} md={'12'} className={'ml-auto text-center'}>
               <ul>
                 <li>
                   <h5>Like the project?</h5>
@@ -46,17 +51,17 @@ class KipoiFooter extends Component {
                      className="btn btn-primary waves-effect waves-light" rel="nofollow">Tweet us!</a>
                 </li>
               </ul>
-            </Col>
-          </Row>
-        </Container>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
         <div className={'footer-copyright'}>
-          <Container fluid>
-            © ${KipoiFooter.getYear()} The Kipoi team, website developed by <a href="https://github.com/zupan"
-                                                           className="Nejc Zupan github">Nejc Zupan <i className="fa fa-github" aria-hidden="true"/>
+          <MDBContainer fluid>
+            © {KipoiFooter.getYear()} The Kipoi team, website developed by <a href="https://github.com/zupan"
+                                                           className="Nejc Zupan github">Nejc Zupan <FontAwesomeIcon icon={faGithub}/>
           </a>
-          </Container>
+          </MDBContainer>
         </div>
-      </Footer>
+      </MDBFooter>
     );
   }
 }

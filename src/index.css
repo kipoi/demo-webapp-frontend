@@ -16,7 +16,11 @@ body {
     padding-top: 64px;
 }
 
-.unique-color-kipoi, .unique-color {
+.unique-color-kipoi, .unique-color, .tabs-unique-color-kipoi {
+    background-color: #34669a !important;
+}
+
+.btn-primary {
     background-color: #34669a !important;
 }
 

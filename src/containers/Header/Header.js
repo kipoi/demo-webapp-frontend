@@ -3,14 +3,22 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import {
-  Button,
-  Navbar,
-  NavbarBrand,
-  NavbarNav,
-  NavbarToggler,
-  Collapse,
-  NavItem
-} from "mdbreact";
+  MDBBtn,
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavbarToggler,
+  MDBCollapse,
+  MDBNavItem
+} from 'mdbreact';
+
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faFileAlt} from '@fortawesome/free-solid-svg-icons';
+import {faGithub} from '@fortawesome/free-brands-svg-icons';
+
+library.add(faFileAlt);
+library.add(faGithub);
 
 const Logo = require('./nav_bar_logo_v3.png');
 
@@ -22,77 +30,75 @@ class Header extends Component {
     };
   }
 
-  toggleCollapse = collapseID => () =>
+  toggleMDBCollapse = collapseID => () =>
     this.setState(prevState => ({
       collapseID: prevState.collapseID !== collapseID ? collapseID : ""
     }));
 
-  closeCollapse = collapseID => () =>
+  closeMDBCollapse = collapseID => () =>
     this.state.collapseID === collapseID && this.setState({collapseID: ""});
 
   render() {
     return (
-      <Navbar color='unique-color-kipoi' dark expand='sm' fixed='top'>
-        <NavbarBrand>
+      <MDBNavbar color='unique-color-kipoi' dark expand='sm' fixed='top'>
+        <MDBNavbarBrand>
           <Link to={'/'} className={'left-margin'}>
             <img src={Logo} alt='Kipoi' height={50}/>
           </Link>
-        </NavbarBrand>
+        </MDBNavbarBrand>
 
-        <NavbarToggler
-          onClick={this.toggleCollapse("navbarCollapse")}
+        <MDBNavbarToggler
+          onClick={this.toggleMDBCollapse("navbarMDBCollapse")}
         />
-        <Collapse
-          id="navbarCollapse"
+        <MDBCollapse
+          id="navbarMDBCollapse"
           isOpen={this.state.collapseID}
           navbar
         >
 
-          <NavbarNav left>
-            <NavItem>
-              <a href={'https://kipoi.org/groups/'} target={'_blank'}>
-                <Button outline color={'primary'} className={'nav-button btn'}>
-                  Models
-                </Button>
-              </a>
-            </NavItem>
-            <NavItem>
+          <MDBNavbarNav left>
+            <MDBNavItem>
+                  <MDBBtn outline color={'primary'} className={'nav-button btn'}>
+                    Models
+                  </MDBBtn>
+            </MDBNavItem>
+            <MDBNavItem>
               <a href={'https://kipoi.org/about/'} target={'_blank'}>
-                <Button outline color={'primary'} className={'nav-button btn'}>
+                <MDBBtn outline color={'primary'} className={'nav-button btn'}>
                   About
-                </Button>
+                </MDBBtn>
               </a>
-            </NavItem>
-            <NavItem>
+            </MDBNavItem>
+            <MDBNavItem>
               <a href={'https://kipoi.org/docs/'} target={'_blank'}>
-                <Button outline color={'primary'} className={'nav-button btn'}>
+                <MDBBtn outline color={'primary'} className={'nav-button btn'}>
                   Docs
-                </Button>
+                </MDBBtn>
               </a>
-            </NavItem>
-          </NavbarNav>
-          <NavbarNav right>
-            <NavItem>
+            </MDBNavItem>
+          </MDBNavbarNav>
+          <MDBNavbarNav right>
+            <MDBNavItem>
               <a href="https://www.biorxiv.org/content/early/2018/07/24/375345.full.pdf" target={'blank'}
                  className={'text-nowrap nav-link waves-effect waves-light'}>
-                White paper <i className="fa fa-file-text-o" aria-hidden="true"/>
+                White paper <FontAwesomeIcon icon={faFileAlt}/>
               </a>
-            </NavItem>
-            <NavItem>
+            </MDBNavItem>
+            <MDBNavItem>
               <a href="https://github.com/kipoi/models" target={'blank'}
                  className={'text-nowrap nav-link waves-effect waves-light'}>
-                Model repository<i className="fa fa-github" aria-hidden="true"/>
+                Model repository <FontAwesomeIcon icon={faGithub}/>
               </a>
-            </NavItem>
-            <NavItem>
+            </MDBNavItem>
+            <MDBNavItem>
               <a href="https://github.com/kipoi/kipoi" target={'blank'}
                  className={'text-nowrap nav-link waves-effect waves-light'}>
-                API repository<i className="fa fa-github" aria-hidden="true"/>
+                API repository <FontAwesomeIcon icon={faGithub}/>
               </a>
-            </NavItem>
-          </NavbarNav>
-        </Collapse>
-      </Navbar>
+            </MDBNavItem>
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBNavbar>
     )
   }
 }

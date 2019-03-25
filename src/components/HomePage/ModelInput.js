@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {TabPane, TabContent, Nav, NavItem, NavLink, Container} from 'mdbreact';
+import {MDBContainer, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink} from 'mdbreact';
 import classnames from 'classnames';
 import TabInput from "./TabInput";
 import {fetchSampleSequences} from "../../redux/actions/sampleActions";
@@ -32,10 +32,10 @@ class ModelInput extends React.Component {
     const {sampleSequences, sampleSequencesLoading, sampleSequencesError} = this.props;
 
     return (
-      <Container>
-        <Nav tabs className="nav-justified">
-          <NavItem>
-            <NavLink
+      <MDBContainer>
+        <MDBNav tabs className="nav-justified">
+          <MDBNavItem>
+            <MDBNavLink
               to='#'
               className={classnames({active: this.state.activeItem === 'predict'})}
               onClick={() => {
@@ -43,10 +43,10 @@ class ModelInput extends React.Component {
               }}
             >
               Predict
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
+            </MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBNavLink
               to='#'
               className={classnames({active: this.state.activeItem === 'score-variants'})}
               onClick={() => {
@@ -54,10 +54,10 @@ class ModelInput extends React.Component {
               }}
             >
               Score Variants
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
+            </MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBNavLink
               to='#'
               className={classnames({active: this.state.activeItem === 'interpret'})}
               onClick={() => {
@@ -65,27 +65,29 @@ class ModelInput extends React.Component {
               }}
             >
               Interpret
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <TabContent activeItem={this.state.activeItem}>
-          <TabPane tabId="predict">
+            </MDBNavLink>
+          </MDBNavItem>
+        </MDBNav>
+        <MDBTabContent activeItem={this.state.activeItem}>
+          <MDBTabPane tabId="predict">
             <TabInput fileType="fasta" sample={sampleSequences && sampleSequences['fasta_data']}
                       loading={sampleSequencesLoading}
                       error={sampleSequencesError}/>
-          </TabPane>
-          <TabPane tabId="score-variants">
-            <TabInput fileType="vcf" sample={sampleSequences && sampleSequences['vcf_data']}
-                      loading={sampleSequencesLoading}
-                      error={sampleSequencesError}/>
-          </TabPane>
-          <TabPane tabId="interpret">
-            <TabInput fileType="bed" sample={sampleSequences && sampleSequences['bed_data']}
-                      loading={sampleSequencesLoading}
-                      error={sampleSequencesError}/>
-          </TabPane>
-        </TabContent>
-      </Container>
+          </MDBTabPane>
+          <MDBTabPane tabId="score-variants">
+            Under construction.
+            {/*<TabInput fileType="vcf" sample={sampleSequences && sampleSequences['vcf_data']}*/}
+                      {/*loading={sampleSequencesLoading}*/}
+                      {/*error={sampleSequencesError}/>*/}
+          </MDBTabPane>
+          <MDBTabPane tabId="interpret">
+            Under construction.
+            {/*<TabInput fileType="bed" sample={sampleSequences && sampleSequences['bed_data']}*/}
+                      {/*loading={sampleSequencesLoading}*/}
+                      {/*error={sampleSequencesError}/>*/}
+          </MDBTabPane>
+        </MDBTabContent>
+      </MDBContainer>
     );
   }
 }

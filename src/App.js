@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, {Component} from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import './index.css';
 import 'material-design-lite/material.min.css';
@@ -26,13 +26,13 @@ class App extends Component {
     }));
 
   closeCollapse = collapseID => () =>
-    this.state.collapseID === collapseID && this.setState({ collapseID: '' });
+    this.state.collapseID === collapseID && this.setState({collapseID: ''});
 
   render() {
     const overlay = (
       <div
         id='sidenav-overlay'
-        style={{ backgroundColor: 'transparent' }}
+        style={{backgroundColor: 'transparent'}}
         onClick={this.toggleCollapse('mainNavbarCollapse')}
       />
     );
@@ -41,8 +41,8 @@ class App extends Component {
         <div>
           <Header/>
           {this.state.collapseID && overlay}
-          <main style={{ marginTop: '6rem' }}>
-            <Routes />
+          <main style={{marginTop: '6rem'}}>
+            <Routes/>
           </main>
           <Footer/>
         </div>
