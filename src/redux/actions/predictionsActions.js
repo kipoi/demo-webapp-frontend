@@ -17,10 +17,21 @@ export function fetchPredictions(sequenceData) {
       body: JSON.stringify(sequenceData)
     })
       .then(response => response.json())
-      .then(predictions => dispatch({
-        type: PREDICTIONS_RECEIVED,
-        payload: predictions
-      }))
+      .then(predictions => {
+        if (predictions.type === 'error') {
+          dispatch({
+            type: PREDICTIONS_FAILED,
+            payload: predictions.message
+          });
+        }
+
+        else {
+          dispatch({
+            type: PREDICTIONS_RECEIVED,
+            payload: predictions
+          });
+        }
+      })
       .catch(error => dispatch({
         type: PREDICTIONS_FAILED,
         payload: error
