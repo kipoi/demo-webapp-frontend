@@ -29,7 +29,7 @@ class ModelInput extends React.Component {
 
   render() {
 
-    const {sampleSequences, sampleSequencesLoading, sampleSequencesError} = this.props;
+    const {sampleSequences, loading, error} = this.props;
 
     return (
       <MDBContainer>
@@ -71,8 +71,9 @@ class ModelInput extends React.Component {
         <MDBTabContent activeItem={this.state.activeItem}>
           <MDBTabPane tabId="predict">
             <TabInput fileType="fasta" sample={sampleSequences && sampleSequences['fasta_data']}
-                      loading={sampleSequencesLoading}
-                      error={sampleSequencesError}/>
+                      selectedModels={this.props.selectedModels}
+                      loading={loading}
+                      error={error}/>
           </MDBTabPane>
           <MDBTabPane tabId="score-variants">
             Under construction.
@@ -94,8 +95,8 @@ class ModelInput extends React.Component {
 
 const mapStateToProps = state => ({
   sampleSequences: state.samplesReducer.sampleSequences,
-  sampleSequencesLoading: state.samplesReducer.sampleSequencesLoading,
-  sampleSequencesError: state.samplesReducer.sampleSequencesError
+  loading: state.samplesReducer.loading,
+  error: state.samplesReducer.error
 });
 
 export default connect(mapStateToProps)(ModelInput);
