@@ -1,37 +1,22 @@
-export const GET_SAMPLES_BEGIN = 'GET_SAMPLES_BEGIN';
-export const GET_SAMPLES_SUCCESS = 'GET_SAMPLES_SUCCESS';
-export const GET_SAMPLES_FAILURE = 'GET_SAMPLES_FAILURE';
+export const SAMPLES_REQUESTED = 'SAMPLES_REQUESTED';
+export const SAMPLES_RECEIVED = 'SAMPLES_RECEIVED';
+export const SAMPLES_FAILED = 'SAMPLES_FAILED';
 
 export function fetchSampleSequences() {
   return dispatch => {
-    dispatch(fetchSampleSequencesBegin());
-    return fetch('http://localhost:5000/get_samples')
-      .then(response => {
-        return response.json().then(body => {
-          if (response.status === 200) {
-            dispatch(fetchSampleSequencesSuccess(body));
-            return body;
-          }
+    dispatch({
+      type: SAMPLES_REQUESTED
+    });
 
-          else {
-            throw body;
-          }
-        })
-      })
-      .catch(error => dispatch(fetchSampleSequencesFailure(error)));
-  }
+    fetch('http://localhost:5000/get_samples')
+      .then(response => response.json())
+      .then(samples => dispatch({
+        type: SAMPLES_RECEIVED,
+        payload: samples
+      }))
+      .catch(error => dispatch({
+        type: SAMPLES_FAILED,
+        payload: error
+      }));
+  };
 }
-
-export const fetchSampleSequencesBegin = () => ({
-  type: GET_SAMPLES_BEGIN
-});
-
-export const fetchSampleSequencesSuccess = sampleSequences => ({
-  type: GET_SAMPLES_SUCCESS,
-  payload: {sampleSequences}
-});
-
-export const fetchSampleSequencesFailure = error => ({
-  type: GET_SAMPLES_FAILURE,
-  payload: {error}
-});

@@ -1,40 +1,25 @@
-import {
-  GET_SAMPLES_BEGIN,
-  GET_SAMPLES_SUCCESS,
-  GET_SAMPLES_FAILURE
-} from '../actions/sampleActions';
+import {SAMPLES_FAILED, SAMPLES_RECEIVED, SAMPLES_REQUESTED} from "../actions/sampleActions";
 
 const initialState = {
   sampleSequences: null,
-  sampleSequencesLoading: false,
-  sampleSequencesError: null
+  loading: false,
+  error: null
 };
 
 export default function samplesReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_SAMPLES_BEGIN:
-      return {
-        ...state,
-        sampleSequencesLoading: true,
-        sampleSequencesError: null
-      };
-
-    case GET_SAMPLES_SUCCESS:
-      return {
-        ...state,
-        sampleSequences: action.payload.sampleSequences,
-        sampleSequencesLoading: false
-      };
-
-    case GET_SAMPLES_FAILURE:
-      return {
-        ...state,
-        sampleSequencesLoading: false,
-        sampleSequencesError: action.payload.error,
-        sampleSequences: null
-      };
-
+    case SAMPLES_REQUESTED:
+      state = Object.assign({}, state, {loading: true, error: null});
+      break;
+    case SAMPLES_RECEIVED:
+      state = Object.assign({}, state, {sampleSequences: action.payload, loading: false, error: null});
+      break;
+    case SAMPLES_FAILED:
+      state = Object.assign({}, state, {sampleSequences: null, loading: false, error: action.payload});
+      break;
     default:
-      return state;
+      break;
   }
+
+  return state;
 };
