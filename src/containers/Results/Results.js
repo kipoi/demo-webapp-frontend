@@ -107,7 +107,9 @@ class Results extends React.Component {
                 <MDBDataTable
                   striped
                   hover
-                  entries={100}
+                  entriesLabel=""
+                  entries={25}
+                  entriesOptions={[25, 100, 500, 1000]}
                   data={data}
                 />
               </MDBCol>

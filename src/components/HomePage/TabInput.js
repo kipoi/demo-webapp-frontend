@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import {Row, InputFile, Button, Input, Spinner} from 'mdbreact';
+import {MDBRow, InputFile, Button, MDBInput, MDBSpinner} from 'mdbreact';
 import SweetAlert from 'sweetalert-react';
 
 import {splitFastaInput} from '../../helpers/FastaHelper';
@@ -92,19 +92,19 @@ class TabInput extends Component {
 
     if (loading) {
       return (
-        <Row>
-          <Spinner blue big/>
-        </Row>
+        <MDBRow>
+          <MDBSpinner blue big/>
+        </MDBRow>
       )
     }
 
     const placeholder = `# Example (BED)\nchr1	100	200\nchr1	200	300\n\n# Example (FASTA)\n>seq1\nACGAT..\n>seq2\nACGAT..`;
 
     return (
-      <Row>
-        <div className="col-md-9 d-flex align-items-stretch">
-          <InputFile getValue={this.fileInputHandler}/>
-        </div>
+      <MDBRow>
+        {/*<div className="col-md-9 d-flex align-items-stretch">*/}
+          {/*<InputFile getValue={this.fileInputHandler}/>*/}
+        {/*</div>*/}
         <div className="col-md-3 mt-auto mb-auto d-flex align-items-stretch align-middle">
           <Button color={'primary'} disabled={loading} onClick={this.sampleButtonClick}>Use Example</Button>
         </div>
@@ -112,11 +112,11 @@ class TabInput extends Component {
           <p style={{color: 'red'}}>{this.state.fileError}</p>
         </div>
         <div className="col-md-9">
-          <Input type="textarea" hint={placeholder} value={this.state.inputText} onChange={this.handleChange} rows="15"
+          <MDBInput type="textarea" hint={placeholder} value={this.state.inputText} onChange={this.handleChange} rows="15"
                  style={{'overflow': 'scroll', border: '1px dotted gray', padding: '15px'}}/>
         </div>
         <div className="col-md-9">
-          <Input label="Example label" hint="(Optional)"/>
+          <MDBInput label="Example label" hint="(Optional)"/>
         </div>
         <div className="col-md-9">
           <Button color="primary" disabled={(this.state.fileError && this.state.fileError.length > 0)}
@@ -140,7 +140,7 @@ class TabInput extends Component {
           onConfirm={() => this.setState({showSampleError: false})}
           onOutsideClick={() => this.setState({showSampleError: false})}
         />
-      </Row>
+      </MDBRow>
     )
   }
 }
