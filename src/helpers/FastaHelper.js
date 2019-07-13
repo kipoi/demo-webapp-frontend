@@ -37,6 +37,10 @@ const splitFastaInput = (input) => {
         'id': id,
         'seq': sequenceString
       });
+    } else {
+      return {
+        'error': 'Not a valid Fasta input.'
+      };
     }
   }
 
