@@ -248,3 +248,7 @@ hr.clearfix {
 .title {
     text-transform: uppercase;
 }
+
+.md-tabs {
+    background-color: #34669a !important;
+}
