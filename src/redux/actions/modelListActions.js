@@ -8,7 +8,7 @@ export function fetchModelList() {
       type: MODEL_LIST_REQUESTED
     });
 
-    fetch('http://localhost:5000/metadata/model_list/kipoi-py3-keras2')
+    fetch('http://localhost:5000/metadata/model_list/kipoi-py3-keras1.2')
       .then(response => response.json())
       .then(models => dispatch({
         type: MODEL_LIST_RECEIVED,

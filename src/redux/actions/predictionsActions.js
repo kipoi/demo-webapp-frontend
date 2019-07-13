@@ -2,7 +2,7 @@ export const PREDICTIONS_REQUESTED = 'PREDICTIONS_REQUESTED';
 export const PREDICTIONS_RECEIVED = 'PREDICTIONS_RECEIVED';
 export const PREDICTIONS_FAILED = 'PREDICTIONS_FAILED';
 
-export function fetchPredictions(sequenceData) {
+export function fetchPredictions(data) {
   return dispatch => {
     dispatch({
       type: PREDICTIONS_REQUESTED
@@ -14,7 +14,7 @@ export function fetchPredictions(sequenceData) {
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
       },
-      body: JSON.stringify(sequenceData)
+      body: data
     })
       .then(response => response.json())
       .then(predictions => {

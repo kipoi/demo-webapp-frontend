@@ -3,15 +3,17 @@ import React, {Component} from 'react';
 import {
   MDBRow,
   MDBSelect,
-  MDBSelectInput,
-  MDBSelectOptions,
-  MDBSelectOption,
-  MDBSpinner
+  MDBSpinner,
+  MDBContainer
 } from 'mdbreact';
 import {fetchModelList} from "../../redux/actions/modelListActions";
 import {connect} from "react-redux";
 
 class ModelSelectBox extends Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     this.props.dispatch(fetchModelList());
@@ -27,35 +29,44 @@ class ModelSelectBox extends Component {
 
     if (error) {
       return (
-        <div>
-          An error occurred reading the model list.
-        </div>
+        <MDBContainer>
+          <div>
+            An error occurred reading the model list.
+          </div>
+        </MDBContainer>
       )
     }
 
     if (models && !loading) {
 
-      const modelList = models.map((model, index) => {
-        return <MDBSelectOption key={index} value={model}>{model}</MDBSelectOption>
+      const selectModels = models.map((model) => {
+        return {'text': model['model'], 'value': model['model']}
       });
-      modelList.unshift(<MDBSelectOption key='choose' disabled>Choose your models</MDBSelectOption>);
 
       return (
-        <div>
-          <MDBSelect multiple search={true} getValue={this.handleModelChange}>
-            <MDBSelectInput selected="Choose your models"/>
-            <MDBSelectOptions>
-              {modelList.slice(0, 10)}
-            </MDBSelectOptions>
-          </MDBSelect>
-        </div>
+        <MDBContainer>
+          <MDBRow>
+            <MDBSelect
+              id='model-select'
+              style={{'width': '100%'}}
+              multiple
+              search
+              options={selectModels}
+              selected='Choose models'
+              selectAll
+              getValue={this.handleModelChange}
+            />
+          </MDBRow>
+        </MDBContainer>
       );
     }
 
     return (
-      <MDBRow>
-        <MDBSpinner blue big/>
-      </MDBRow>
+      <MDBContainer>
+        <MDBRow>
+          <MDBSpinner blue big/>
+        </MDBRow>
+      </MDBContainer>
     );
   }
 }

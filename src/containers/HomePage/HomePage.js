@@ -17,13 +17,13 @@ class HomePage extends React.Component {
     super(props);
 
     this.state = {
-      'selectedModels': []
+      selectedModels: []
     };
   }
 
   handleModelSelect = (values) => {
     this.setState({
-      'selectedModels': values
+      selectedModels: values
     });
   };
 
@@ -42,14 +42,12 @@ class HomePage extends React.Component {
             </MDBCol>
           </MDBRow>
           <MDBRow>
-            <MDBCol lg='3' md='3'>
-              <h5 className={'text-center'}>1. Select models</h5>
-              <ModelSelectBox handleModelSelect={this.handleModelSelect}/>
-            </MDBCol>
-            <MDBCol lg='9' md='9'>
-              <h5 className={'text-center'}>2. Provide input data</h5>
-              <ModelInput selectedModels={this.state.selectedModels}/>
-            </MDBCol>
+            <h5 className={'text-center'}>1. Select models</h5>
+            <ModelSelectBox handleModelSelect={this.handleModelSelect}/>
+          </MDBRow>
+          <MDBRow>
+            <h5 className={'text-center'}>2. Provide input data</h5>
+            <ModelInput selectedModels={this.state.selectedModels}/>
           </MDBRow>
         </MDBCol>
       </MDBRow>

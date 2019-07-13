@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {MDBRow, InputFile, Button, MDBInput, MDBSpinner} from 'mdbreact';
 import SweetAlert from 'sweetalert-react';
-
 import {splitFastaInput} from '../../helpers/FastaHelper';
 
 class TabInput extends Component {
@@ -11,14 +10,14 @@ class TabInput extends Component {
     super(props);
 
     this.state = {
+      selectedFileName: null,
       selectedFile: null,
       fileError: null,
       fileType: this.props.fileType,
       inputText: '',
-      errorText: null,
-      showError: false,
-      sampleErrorText: null,
-      showSampleError: false
+      alertText: null,
+      alertTitle: '',
+      showAlert: false,
     };
   }
 
@@ -26,8 +25,9 @@ class TabInput extends Component {
     const {sample, error} = this.props;
 
     this.setState({
-      sampleErrorText: error,
-      showSampleError: !!error
+      alertTitle: 'Error',
+      alertText: error.message,
+      showAlert: !!error
     });
 
     if (sample) {
@@ -38,7 +38,6 @@ class TabInput extends Component {
   };
 
   fileInputHandler = (event) => {
-
     const fileName = event[0].name;
     const fileExtension = fileName.split('.').pop();
 
@@ -48,7 +47,9 @@ class TabInput extends Component {
       });
     } else {
       this.setState({
-        selectedFile: fileName
+        selectedFileName: fileName,
+        selectedFile: event[0],
+        fileError: null
       });
     }
   };
@@ -60,24 +61,87 @@ class TabInput extends Component {
   };
 
   handleSubmit = () => {
-    const parsedInput = splitFastaInput(this.state.inputText);
+    let validInput = false;
+    let validModels = false;
+    let formData = new FormData();
 
-    if (parsedInput && parsedInput['error']) {
-      this.setState({
-        errorText: parsedInput['error'],
-        showError: true
-      })
-    }
+    if (this.state.inputText.length > 0) {
+      const parsedInput = splitFastaInput(this.state.inputText);
 
-    this.props.history.push({
-      pathname: 'results',
-      state: {
-        data: {
-          'sequences': parsedInput,
-          'models': this.props.selectedModels
+      if (parsedInput) {
+        if (parsedInput['error']) {
+          this.setState({
+            errorText: parsedInput['error'],
+            showError: true
+          });
+        }
+
+        else {
+          formData.append('sequences', JSON.stringify(parsedInput));
+          validInput = true;
         }
       }
-    });
+    }
+
+    else if (this.state.selectedFile && !this.state.fileError) {
+      formData.append('file', this.state.selectedFile);
+      formData.append('filename', this.state.selectedFileName);
+      validInput = true;
+    }
+
+    else {
+      this.setState({
+        alertTitle: 'Error',
+        alertText: 'Empty input.',
+        showAlert: true
+      });
+    }
+
+    if (this.props.selectedModels.length === 0) {
+      this.setState({
+        alertTitle: 'Error',
+        alertText: 'No models selected.',
+        showAlert: true
+      });
+    } else {
+      formData.append('models', JSON.stringify(this.props.selectedModels));
+      validModels = true;
+    }
+
+    if (validInput && validModels) {
+      this.setState({
+        alertTitle: 'Please Wait',
+        alertText: 'Loading the predictions.',
+        showAlert: true
+      });
+
+      fetch('http://localhost:5000/get_predictions', {
+        method: 'POST',
+        mode: 'cors',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(predictions => {
+
+          if (predictions['type'] === 'error') {
+            throw new Error(predictions['message']);
+          }
+
+          this.props.history.push({
+            pathname: 'results',
+            state: {
+              predictions: predictions
+            }
+          });
+        })
+        .catch(error => {
+          this.setState({
+            alertTitle: 'Error',
+            alertText: error.message,
+            showAlert: true
+          });
+        })
+    }
   };
 
   clearInput = () => {
@@ -100,11 +164,12 @@ class TabInput extends Component {
 
     const placeholder = `# Example (BED)\nchr1	100	200\nchr1	200	300\n\n# Example (FASTA)\n>seq1\nACGAT..\n>seq2\nACGAT..`;
 
+
     return (
       <MDBRow>
-        {/*<div className="col-md-9 d-flex align-items-stretch">*/}
-          {/*<InputFile getValue={this.fileInputHandler}/>*/}
-        {/*</div>*/}
+        <div className="col-md-9 d-flex align-items-stretch">
+          <InputFile getValue={this.fileInputHandler}/>
+        </div>
         <div className="col-md-3 mt-auto mb-auto d-flex align-items-stretch align-middle">
           <Button color={'primary'} disabled={loading} onClick={this.sampleButtonClick}>Use Example</Button>
         </div>
@@ -112,8 +177,9 @@ class TabInput extends Component {
           <p style={{color: 'red'}}>{this.state.fileError}</p>
         </div>
         <div className="col-md-9">
-          <MDBInput type="textarea" hint={placeholder} value={this.state.inputText} onChange={this.handleChange} rows="15"
-                 style={{'overflow': 'scroll', border: '1px dotted gray', padding: '15px'}}/>
+          <MDBInput type="textarea" hint={placeholder} value={this.state.inputText} onChange={this.handleChange}
+                    rows="15"
+                    style={{'overflow': 'scroll', border: '1px dotted gray', padding: '15px'}}/>
         </div>
         <div className="col-md-9">
           <MDBInput label="Example label" hint="(Optional)"/>
@@ -126,19 +192,11 @@ class TabInput extends Component {
         </div>
 
         <SweetAlert
-          show={this.state.showError}
-          title="Error"
-          text={this.state.errorText}
-          onConfirm={() => this.setState({showError: false})}
-          onOutsideClick={() => this.setState({showError: false})}
-        />
-
-        <SweetAlert
-          show={this.state.showSampleError}
-          title="Error"
-          text={this.state.sampleErrorText}
-          onConfirm={() => this.setState({showSampleError: false})}
-          onOutsideClick={() => this.setState({showSampleError: false})}
+          show={this.state.showAlert}
+          title={this.state.alertTitle}
+          text={this.state.alertText}
+          onConfirm={() => this.setState({showAlert: false})}
+          onOutsideClick={() => this.setState({showAlert: false})}
         />
       </MDBRow>
     )
