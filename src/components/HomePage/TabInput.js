@@ -24,11 +24,13 @@ class TabInput extends Component {
   sampleButtonClick = () => {
     const {sample, error} = this.props;
 
-    this.setState({
-      alertTitle: 'Error',
-      alertText: error.message,
-      showAlert: !!error
-    });
+    if (error) {
+      this.setState({
+        alertTitle: 'Error',
+        alertText: error.message,
+        showAlert: !!error
+      });
+    }
 
     if (sample) {
       this.setState({
@@ -126,6 +128,10 @@ class TabInput extends Component {
           if (predictions['type'] === 'error') {
             throw new Error(predictions['message']);
           }
+
+          this.setState({
+            showAlert: false
+          });
 
           this.props.history.push({
             pathname: 'results',
