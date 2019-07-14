@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import {MDBRow, InputFile, Button, MDBInput, MDBSpinner} from 'mdbreact';
 import SweetAlert from 'sweetalert-react';
 import {splitFastaInput} from '../../helpers/FastaHelper';
+import {getUrl} from '../../helpers/URL';
 
 class TabInput extends Component {
 
@@ -117,7 +118,7 @@ class TabInput extends Component {
         showAlert: true
       });
 
-      fetch('http://localhost:5000/get_predictions', {
+      fetch(getUrl('/get_predictions'), {
         method: 'POST',
         mode: 'cors',
         body: formData

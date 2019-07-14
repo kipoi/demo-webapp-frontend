@@ -1,6 +1,9 @@
+import {getUrl} from '../../helpers/URL';
+
 export const PREDICTIONS_REQUESTED = 'PREDICTIONS_REQUESTED';
 export const PREDICTIONS_RECEIVED = 'PREDICTIONS_RECEIVED';
 export const PREDICTIONS_FAILED = 'PREDICTIONS_FAILED';
+
 
 export function fetchPredictions(data) {
   return dispatch => {
@@ -8,7 +11,7 @@ export function fetchPredictions(data) {
       type: PREDICTIONS_REQUESTED
     });
 
-    fetch('http://localhost:5000/get_predictions', {
+    fetch(getUrl('/get_predictions'), {
       method: 'POST',
       mode: 'cors',
       headers: {

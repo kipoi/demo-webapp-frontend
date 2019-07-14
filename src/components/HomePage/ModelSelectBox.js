@@ -40,7 +40,7 @@ class ModelSelectBox extends Component {
     if (models && !loading) {
 
       const selectModels = models.map((model) => {
-        return {'text': model['model'], 'value': model['model']}
+        return {'text': model['model'], 'value': `${model['model']}@@@${model['environment']}`}
       });
 
       return (

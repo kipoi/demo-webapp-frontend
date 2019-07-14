@@ -17,7 +17,10 @@ class Results extends React.Component {
 
   render() {
 
-    const {predictions} = this.props.location.state;
+    let predictions = null;
+    if (this.props.location.state) {
+      predictions = this.props.location.state.predictions;
+    }
 
     const data = {
       columns: [
@@ -43,27 +46,9 @@ class Results extends React.Component {
     };
 
     if (!predictions || predictions.length === 0) {
-      return (
-        <MDBRow>
-          <MDBCol lg='9' className={'mx-auto'}>
-            <MDBRow className={'mb-4'}>
-              <MDBCol className={'media kipoi-title-box d-none d-sm-flex'}>
-                <div className={'media-left'}>
-                  <img src={KipoiSmall} className={'media-object'} alt="Kipoi Logo" height={80}/>
-                </div>
-                <div className={'media-body'}>
-                  <h3 className="media-heading">: Model zoo for genomics</h3>
-                </div>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow>
-              <MDBCol>
-                No data for the predictions.
-              </MDBCol>
-            </MDBRow>
-          </MDBCol>
-        </MDBRow>
-      );
+      this.props.history.push({
+        pathname: '/',
+      });
     }
 
     return (

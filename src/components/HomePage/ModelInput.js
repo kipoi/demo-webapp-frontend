@@ -78,14 +78,14 @@ class ModelInput extends React.Component {
           <MDBTabPane tabId="score-variants">
             Under construction.
             {/*<TabInput fileType="vcf" sample={sampleSequences && sampleSequences['vcf_data']}*/}
-                      {/*loading={sampleSequencesLoading}*/}
-                      {/*error={sampleSequencesError}/>*/}
+            {/*loading={sampleSequencesLoading}*/}
+            {/*error={sampleSequencesError}/>*/}
           </MDBTabPane>
           <MDBTabPane tabId="interpret">
             Under construction.
             {/*<TabInput fileType="bed" sample={sampleSequences && sampleSequences['bed_data']}*/}
-                      {/*loading={sampleSequencesLoading}*/}
-                      {/*error={sampleSequencesError}/>*/}
+            {/*loading={sampleSequencesLoading}*/}
+            {/*error={sampleSequencesError}/>*/}
           </MDBTabPane>
         </MDBTabContent>
       </MDBContainer>
