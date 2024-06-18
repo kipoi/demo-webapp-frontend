@@ -60,7 +60,7 @@
     "url-parse": "^1.5.9",
     "webpack-dev-server": "^4.8.1",
     "websocket-extensions": "^0.1.4",
-    "ws": "^6.2.2",
+    "ws": "^6.2.3",
     "y18n": "^4.0.1",
     "yargs-parser": "^13.1.2"
   },
